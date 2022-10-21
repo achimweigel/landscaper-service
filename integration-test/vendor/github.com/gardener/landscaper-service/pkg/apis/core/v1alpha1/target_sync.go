@@ -5,6 +5,7 @@
 package v1alpha1
 
 import (
+	lsschema "github.com/gardener/landscaper/apis/schema"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -54,4 +55,20 @@ type TargetSyncStatus struct {
 	// ObservedGeneration is the most recent generation observed.
 	// +optional
 	ObservedGeneration int64 `json:"observedGeneration"`
+}
+
+var TargetSyncDefinition = lsschema.CustomResourceDefinition{
+	Names: lsschema.CustomResourceDefinitionNames{
+		Plural:   "targetsyncs",
+		Singular: "targetsync",
+		ShortNames: []string{
+			"tgs",
+		},
+		Kind: "TargetSync",
+	},
+	Scope:                    lsschema.NamespaceScoped,
+	Storage:                  true,
+	Served:                   true,
+	SubresourceStatus:        true,
+	AdditionalPrinterColumns: []lsschema.CustomResourceColumnDefinition{},
 }
