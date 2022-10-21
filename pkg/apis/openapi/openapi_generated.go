@@ -43,6 +43,10 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.ServiceTargetConfigList":      schema_pkg_apis_core_v1alpha1_ServiceTargetConfigList(ref),
 		"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.ServiceTargetConfigSpec":      schema_pkg_apis_core_v1alpha1_ServiceTargetConfigSpec(ref),
 		"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.ServiceTargetConfigStatus":    schema_pkg_apis_core_v1alpha1_ServiceTargetConfigStatus(ref),
+		"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.TargetSync":                   schema_pkg_apis_core_v1alpha1_TargetSync(ref),
+		"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.TargetSyncList":               schema_pkg_apis_core_v1alpha1_TargetSyncList(ref),
+		"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.TargetSyncSpec":               schema_pkg_apis_core_v1alpha1_TargetSyncSpec(ref),
+		"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.TargetSyncStatus":             schema_pkg_apis_core_v1alpha1_TargetSyncStatus(ref),
 		"k8s.io/api/core/v1.AWSElasticBlockStoreVolumeSource":                                        schema_k8sio_api_core_v1_AWSElasticBlockStoreVolumeSource(ref),
 		"k8s.io/api/core/v1.Affinity":                                    schema_k8sio_api_core_v1_Affinity(ref),
 		"k8s.io/api/core/v1.AttachedVolume":                              schema_k8sio_api_core_v1_AttachedVolume(ref),
@@ -1286,6 +1290,165 @@ func schema_pkg_apis_core_v1alpha1_ServiceTargetConfigStatus(ref common.Referenc
 		},
 		Dependencies: []string{
 			"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.ObjectReference"},
+	}
+}
+
+func schema_pkg_apis_core_v1alpha1_TargetSync(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "The TargetSync is created targets from secrets.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Default: map[string]interface{}{},
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+						},
+					},
+					"spec": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Spec contains the specification",
+							Default:     map[string]interface{}{},
+							Ref:         ref("github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.TargetSyncSpec"),
+						},
+					},
+					"status": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Status contains the status",
+							Default:     map[string]interface{}{},
+							Ref:         ref("github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.TargetSyncStatus"),
+						},
+					},
+				},
+				Required: []string{"spec"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.TargetSyncSpec", "github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.TargetSyncStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+	}
+}
+
+func schema_pkg_apis_core_v1alpha1_TargetSyncList(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "TargetSyncList contains a list of TargetSync objects",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Default: map[string]interface{}{},
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
+						},
+					},
+					"items": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.TargetSync"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"items"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.TargetSync", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
+	}
+}
+
+func schema_pkg_apis_core_v1alpha1_TargetSyncSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "TargetSyncSpec contains the specification for a TargetSync.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"secretRef": {
+						SchemaProps: spec.SchemaProps{
+							Description: "SecretRef references the secret that contains the kubeconfig to the name.",
+							Default:     map[string]interface{}{},
+							Ref:         ref("github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.SecretReference"),
+						},
+					},
+					"secretNameExpression": {
+						SchemaProps: spec.SchemaProps{
+							Description: "SecretNameExpression defines the names of the secrets which should be synced via a regular expression according to https://github.com/google/re2/wiki/Syntax if not set all secrets are synced",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"namespaceExpression": {
+						SchemaProps: spec.SchemaProps{
+							Description: "NamespaceExpression defines the namespaces in which targets with the synced secrets are created via a regular expression according to https://github.com/google/re2/wiki/Syntax",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+				},
+				Required: []string{"secretRef", "namespaceExpression"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1.SecretReference"},
+	}
+}
+
+func schema_pkg_apis_core_v1alpha1_TargetSyncStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "TargetSyncStatus contains the status of a TargetSync.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"observedGeneration": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ObservedGeneration is the most recent generation observed.",
+							Default:     0,
+							Type:        []string{"integer"},
+							Format:      "int64",
+						},
+					},
+				},
+			},
+		},
 	}
 }
 

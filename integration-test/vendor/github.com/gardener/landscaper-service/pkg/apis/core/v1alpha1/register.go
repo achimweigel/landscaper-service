@@ -43,6 +43,7 @@ var (
 			LandscaperDeploymentDefinition,
 			InstanceDefinition,
 			ServiceTargetConfigDefinition,
+			// TargetSync,
 		},
 	}
 )
@@ -59,6 +60,8 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&ServiceTargetConfigList{},
 		&AvailabilityCollection{},
 		&AvailabilityCollectionList{},
+		//&TargetSync{},
+		//&TargetSyncList{},
 	)
 
 	if err := RegisterConversions(scheme); err != nil {
