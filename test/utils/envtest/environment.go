@@ -10,7 +10,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -305,7 +304,7 @@ func (e *Environment) parseResources(path string, state *State) ([]client.Object
 			return nil
 		}
 
-		data, err := ioutil.ReadFile(path)
+		data, err := os.ReadFile(path)
 		if err != nil {
 			return errors.Wrapf(err, "unable to read file %s", path)
 		}
