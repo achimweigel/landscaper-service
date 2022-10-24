@@ -1,18 +1,17 @@
-// SPDX-FileCopyrightText: 2021 "SAP SE or an SAP affiliate company and Gardener contributors"
+// SPDX-FileCopyrightText: 2022 "SAP SE or an SAP affiliate company and Gardener contributors"
 //
 // SPDX-License-Identifier: Apache-2.0
 
 package targetsync
 
 import (
+	"github.com/gardener/landscaper/controller-utils/pkg/logging"
 	"github.com/go-logr/logr"
-
 	"sigs.k8s.io/controller-runtime/pkg/builder"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	"github.com/gardener/landscaper-service/pkg/apis/core/v1alpha1"
-	"github.com/gardener/landscaper/controller-utils/pkg/logging"
 )
 
 // AddControllerToManager adds the controller to the manager
